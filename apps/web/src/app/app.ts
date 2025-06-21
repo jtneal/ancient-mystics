@@ -1,13 +1,17 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { NxWelcome } from './nx-welcome';
+import { Component, inject } from '@angular/core';
+import { ChatService } from './services/chat.service';
+import { PersonalitySelectionComponent } from './components/personality-selection.component';
+import { ChatComponent } from './components/chat.component';
+import { AsyncPipe } from '@angular/common';
+import { ChatSidebarComponent } from './components/chat-sidebar.component';
 
 @Component({
-  imports: [NxWelcome, RouterModule],
+  imports: [AsyncPipe, ChatComponent, ChatSidebarComponent, PersonalitySelectionComponent],
   selector: 'app-root',
-  templateUrl: './app.html',
   styleUrl: './app.scss',
+  templateUrl: './app.html',
 })
 export class App {
-  protected title = 'web';
+  private readonly chatService = inject(ChatService);
+  currentPersonality$ = this.chatService.currentPersonality$
 }
